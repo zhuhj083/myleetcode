@@ -1,5 +1,8 @@
 package com.zhj.leetcode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
  *
@@ -44,6 +47,91 @@ package com.zhj.leetcode;
  */
 public class No_13_romanToInt {
     public int romanToInt(String s) {
-        return 0 ;
+        if (s == null) {
+            return 0;
+        }
+        int result = 0 ;
+        int i = 0 ;
+        while(i < s.length() ){
+            char ch = s.charAt(i);
+            switch (ch) {
+                case 'I'://1
+                    result += 1;
+                    while( i + 1 < s.length()){
+                        char c = s.charAt( i + 1 );
+                        if (c == 'V'){
+                            result += 3 ;
+                            i++;
+                            break;
+                        }else if (c == 'X'){
+                            result += 8 ;
+                            i++;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }
+                    i++;
+                    break;
+                case 'V'://5
+                    result += 5;
+                    i++;
+                    break;
+                case 'X'://10
+                    result += 10;
+                    while( i + 1 < s.length()){
+                        char c = s.charAt( i + 1 );
+                        if (c == 'L'){
+                            result += 30 ;
+                            i++;
+                            break;
+                        }else if (c == 'C'){
+                            result += 80 ;
+                            i++;
+                            break;
+                        }else {
+                            break;
+                        }
+                    }
+                    i++;
+                    break;
+                case 'L'://50
+                    result += 50;
+                    i++;
+                    break;
+                case 'C'://100
+                    result += 100;
+                    while( i + 1 < s.length()){
+                        char c = s.charAt( i + 1 );
+                        if (c == 'D'){
+                            result += 300 ;
+                            i++;
+                            break;
+                        }else if (c == 'M'){
+                            result += 800 ;
+                            i++;
+                            break;
+                        }else{
+                            break;
+                        }
+                    }
+                    i++;
+                    break;
+                case 'D'://500
+                    result += 500;
+                    i++;
+                    break;
+                case 'M'://1000
+                    result += 1000;
+                    i++;
+                    break;
+            }
+
+        }
+        return result ;
+    }
+
+    public static void main(String[] args) {
+        new No_13_romanToInt().romanToInt("MCMXCIV");
     }
 }
