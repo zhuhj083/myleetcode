@@ -19,6 +19,8 @@ package com.zhj.leetcode;
  * 解释: 从右向左读, 为 01 。因此它不是一个回文数。
  */
 public class No_9_isPalindrome {
+
+    //判断反转后的数是不是和之前的一样
     public static boolean isPalindrome(int x) {
         if (x < 0){
             return false;
