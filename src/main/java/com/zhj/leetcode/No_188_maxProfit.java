@@ -26,6 +26,14 @@ package com.zhj.leetcode;
  */
 public class No_188_maxProfit {
     public int maxProfit(int k, int[] prices) {
+        if (prices != null && prices.length > 1 && k > 0 ){
+
+        }
         return 0;
+    }
+
+    public static void main(String[] args) {
+        int[] s = {2,6,8,7,8,7,9,4,1,2,4,5,8};
+        System.out.println(new No_188_maxProfit().maxProfit(3,s));
     }
 }
