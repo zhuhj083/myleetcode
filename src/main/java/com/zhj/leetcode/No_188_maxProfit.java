@@ -27,9 +27,40 @@ package com.zhj.leetcode;
 public class No_188_maxProfit {
     public int maxProfit(int k, int[] prices) {
         if (prices != null && prices.length > 1 && k > 0 ){
+            if (k >= prices.length / 2 )
+                return greedy(prices);
+
+            //t[i][0]和t[i][1]分别表示第i笔交易买入和卖出时   各自的最大收益
+            int[][] t = new int[k][2];
+            for(int i = 0; i < k; ++i)
+                t[i][0] = Integer.MIN_VALUE;
+
+            for (int p : prices){
+                //第1次买
+                t[0][0] = Math.max( t[0][0] , -p);
+                t[0][1] = Math.max( t[0][1] , t[0][0] + p);
+
+                int i = 1 ;
+                while(i < k ){
+                    t[i][0] = Math.max( t[i][0] , t[i-1][1] -p);
+                    t[i][1] = Math.max( t[i][1] , t[i][0] + p);
+
+                    i++;
+                }
+            }
+            return t[k-1][1];
 
         }
         return 0;
+    }
+
+    private int greedy(int[] prices) {
+        int max = 0;
+        for(int i = 1; i < prices.length; ++i) {
+            if(prices[i] > prices[i-1])
+                max += prices[i] - prices[i-1];
+        }
+        return max;
     }
 
     public static void main(String[] args) {

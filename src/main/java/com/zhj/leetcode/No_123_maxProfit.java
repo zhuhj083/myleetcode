@@ -48,8 +48,7 @@ public class No_123_maxProfit {
      **/
 
     public int maxProfit(int[] prices) {
-        int k = 2 ;
-        if (prices != null && prices.length > 1 && k > 0 ){
+        if (prices != null && prices.length > 1  ){
             int preBuy = Integer.MIN_VALUE ;
             int preSell = 0;
             int buy = Integer.MIN_VALUE;
@@ -60,20 +59,11 @@ public class No_123_maxProfit {
                 preBuy = Math.max(preBuy, -p);
                 preSell = Math.max(preSell, preBuy + p);
 
-                int i = 1 ;
-                while(i < k && i > 0){
-                    buy = Math.max(buy, preSell - p);
-                    sell = Math.max(sell, buy + p );
-                    if ( i != k -1){
-                        preBuy = buy ;
-                        preSell = sell;
-                        buy = Integer.MIN_VALUE;
-                        sell = 0 ;
-                    }
-                    i++;
-                }
+                buy = Math.max(buy, preSell - p);
+                sell = Math.max(sell, buy + p );
+
             }
-            return  k > 1 ? sell : preSell ;
+            return  sell ;
         }
         return 0;
     }
