@@ -1,7 +1,5 @@
 package com.zhj.leetcode;
 
-import com.zhj.leetcode.structure.TreeNode;
-
 import java.util.*;
 
 

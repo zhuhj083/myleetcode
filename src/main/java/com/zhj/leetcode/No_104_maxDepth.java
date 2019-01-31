@@ -1,7 +1,5 @@
 package com.zhj.leetcode;
 
-import com.zhj.leetcode.structure.TreeNode;
-
 /**
  * 给定一个二叉树，找出其最大深度。
  *
