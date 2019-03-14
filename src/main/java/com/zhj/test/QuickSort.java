@@ -53,10 +53,10 @@ public class QuickSort {
 
     public static void main(String[] args) {
 
-        int count = 10;
+        int count = 25;
         int[]b = new int[count];
         for (int i = 0; i < count; i++) {
-            b[i] = new Random().nextInt(100000);
+            b[i] = new Random().nextInt(99);
         }
         printArray(b);
 
