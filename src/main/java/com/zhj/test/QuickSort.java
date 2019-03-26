@@ -60,27 +60,13 @@ public class QuickSort {
         }
         printArray(b);
 
-        int[] a = new int[count];
-        for (int i = 0; i < count; i++) {
-           a[i] = b[i];
-        }
-        printArray(a);
-
-
         System.out.println("---------------------");
 
         long start = System.currentTimeMillis();
         quickSort(b,0,b.length - 1);
         long end1 = (System.currentTimeMillis() - start);
         printArray(b);
-
-        start = System.currentTimeMillis();
-        Arrays.sort(a);
-        long end2 = (System.currentTimeMillis() - start);
-        printArray(a);
-
         System.out.println("------------------cost1=" + end1);
-        System.out.println("------------------cost2=" + end2);
 
     }
 }
