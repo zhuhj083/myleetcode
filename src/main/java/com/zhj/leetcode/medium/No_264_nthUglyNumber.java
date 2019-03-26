@@ -1,5 +1,8 @@
 package com.zhj.leetcode.medium;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 编写一个程序，找出第 n 个丑数。
  *
@@ -19,23 +22,40 @@ package com.zhj.leetcode.medium;
 public class No_264_nthUglyNumber {
     public int nthUglyNumber(int n) {
 
-        return 0;
+        List<Integer> nthUglyNumbers =  new ArrayList<>();
+        nthUglyNumbers.add(1);
+
+
+        int k = 1;
+        while ( k <= n  ){
+            int curMax = nthUglyNumbers.get(nthUglyNumbers.size()-1);
+            int num2 = Integer.MAX_VALUE;
+            int num3 = Integer.MAX_VALUE;
+            int num5 = Integer.MAX_VALUE;
+            for (int i = 0 ; i < nthUglyNumbers.size() ; i ++){
+                if (num2 == Integer.MAX_VALUE  && nthUglyNumbers.get(i) * 2 > curMax){
+                    num2 = nthUglyNumbers.get(i) * 2 ;
+                }
+
+                if (num3 == Integer.MAX_VALUE && nthUglyNumbers.get(i) * 3 > curMax){
+                    num3 = nthUglyNumbers.get(i) * 3 ;
+                }
+
+                if (num3 == Integer.MAX_VALUE && nthUglyNumbers.get(i) * 5 > curMax){
+                    num5 = nthUglyNumbers.get(i) * 5 ;
+                }
+
+                if (num2 != Integer.MAX_VALUE || num3 != Integer.MAX_VALUE  || num5 != Integer.MAX_VALUE ){
+                    break;
+                }
+            }
+            nthUglyNumbers.add(Math.min(Math.min(num2,num3),num5));
+            k++;
+        }
+        return nthUglyNumbers.get(nthUglyNumbers.size()-1);
     }
 
-
-    public boolean isUgly(int num) {
-        if (num == 1) {
-            return true;
-        }
-        while ( num != 0 && num % 2 == 0){
-            num = num / 2 ;
-        }
-        while (num != 0 && num % 3 == 0){
-            num = num / 3 ;
-        }
-        while (num != 0 && num % 5 == 0){
-            num = num / 5 ;
-        }
-        return num == 1 ;
+    public static void main(String[] args) {
+        System.out.println(new No_264_nthUglyNumber().nthUglyNumber(10));
     }
 }
