@@ -21,41 +21,29 @@ import java.util.List;
  */
 public class No_264_nthUglyNumber {
     public int nthUglyNumber(int n) {
+        if (n == 1)
+            return 1;
 
-        List<Integer> nthUglyNumbers =  new ArrayList<>();
-        nthUglyNumbers.add(1);
+        int[] nthUglyNumbers = new int[n];
+        nthUglyNumbers[0]=1;
 
+        int x2 = 0 ;
+        int x3 = 0 ;
+        int x5 = 0 ;
 
-        int k = 1;
-        while ( k <= n  ){
-            int curMax = nthUglyNumbers.get(nthUglyNumbers.size()-1);
-            int num2 = Integer.MAX_VALUE;
-            int num3 = Integer.MAX_VALUE;
-            int num5 = Integer.MAX_VALUE;
-            for (int i = 0 ; i < nthUglyNumbers.size() ; i ++){
-                if (num2 == Integer.MAX_VALUE  && nthUglyNumbers.get(i) * 2 > curMax){
-                    num2 = nthUglyNumbers.get(i) * 2 ;
-                }
-
-                if (num3 == Integer.MAX_VALUE && nthUglyNumbers.get(i) * 3 > curMax){
-                    num3 = nthUglyNumbers.get(i) * 3 ;
-                }
-
-                if (num3 == Integer.MAX_VALUE && nthUglyNumbers.get(i) * 5 > curMax){
-                    num5 = nthUglyNumbers.get(i) * 5 ;
-                }
-
-                if (num2 != Integer.MAX_VALUE || num3 != Integer.MAX_VALUE  || num5 != Integer.MAX_VALUE ){
-                    break;
-                }
-            }
-            nthUglyNumbers.add(Math.min(Math.min(num2,num3),num5));
-            k++;
+        for (int i = 1 ; i < n ; i++) {
+            nthUglyNumbers[i] = Math.min(Math.min(nthUglyNumbers[x2] * 2, nthUglyNumbers[x3] * 3 ) ,nthUglyNumbers[x5] * 5 );
+            if (nthUglyNumbers[i] == nthUglyNumbers[x2]*2)
+                x2++;
+            if (nthUglyNumbers[i] == nthUglyNumbers[x3]*3)
+                x3++;
+            if (nthUglyNumbers[i] == nthUglyNumbers[x5]*5)
+                x5++;
         }
-        return nthUglyNumbers.get(nthUglyNumbers.size()-1);
+        return nthUglyNumbers[n-1];
     }
 
     public static void main(String[] args) {
-        System.out.println(new No_264_nthUglyNumber().nthUglyNumber(10));
+        System.out.println(new No_264_nthUglyNumber().nthUglyNumber(16));
     }
 }
