@@ -13,7 +13,6 @@ public class QuickSort {
         int t = a[start];
         int i = start;
         int j = end ;
-
         while (i < j){
             //从尾部开始，找到一个比t小的元素
             while (i < j){
@@ -21,14 +20,12 @@ public class QuickSort {
                     break;
                 j--;
             }
-
             //找到一个比t大的元素
             while (i < j){
                 if (a[i] > t)
                     break;
                 i++;
             }
-
             // 交换i和j位置的元素
             int temp = a[j];
             a[j] = a[i];
@@ -41,7 +38,6 @@ public class QuickSort {
 
         quickSort( a , start , j -1  );
         quickSort(a,j + 1 , end);
-
     }
 
     public static void printArray(int[] a){

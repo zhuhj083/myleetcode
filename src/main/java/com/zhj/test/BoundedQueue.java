@@ -4,6 +4,9 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 有界阻塞队列
+ */
 public class BoundedQueue<T> {
     private Object[] items;
     //添加的下标，删除的下标和数组的当前数量
