@@ -1,9 +1,16 @@
-package com.zhj.leetcode;
+package com.zhj.leetcode.base;
 
+/**
+ * 链表的一个节点
+ * @author zhuhj
+ */
 public class ListNode {
-    int val;
-    ListNode next;
-    ListNode(int x) {
+
+    public int val;
+
+    public ListNode next;
+
+    public ListNode(int x) {
         val = x;
     }
 

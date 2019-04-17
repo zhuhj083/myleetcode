@@ -15,8 +15,7 @@ package com.zhj.leetcode;
  *
  */
 
-import java.util.Arrays;
-import java.util.List;
+import com.zhj.leetcode.base.ListNode;
 
 /**
  * Definition for singly-linked list.

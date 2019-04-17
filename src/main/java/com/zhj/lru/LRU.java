@@ -1,4 +1,4 @@
-package com.zhj.LRU;
+package com.zhj.lru;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,6 +1,8 @@
 package com.zhj.leetcode;
 
 
+import com.zhj.leetcode.base.ListNode;
+
 /**
  * 反转一个单链表。
  *
