@@ -1,8 +1,6 @@
-package com.zhj.leetcode.card.list;
+package com.zhj.leetcode.learn.list;
 
 import com.zhj.leetcode.base.ListNode;
-
-import java.util.List;
 
 /**
  * 给定一个单链表，把所有的奇数节点和偶数节点分别排在一起。请注意，这里的奇数节点和偶数节点指的是节点编号的奇偶性，而不是节点的值的奇偶性。
@@ -24,25 +22,24 @@ import java.util.List;
  */
 public class LinkedListOddEvenList {
     public ListNode oddEvenList(ListNode head) {
-        if (head == null ){
-            return null;
-        }
-
-        if (head.next == null ){
+        if (head == null || head.next == null) {
             return head;
         }
 
-
-        ListNode oddHead = head;
-        ListNode oddCur = oddHead;
+        //双指针交替前进
+        ListNode oddCur = head;
         ListNode evenHead = head.next;
         ListNode evenCur = evenHead;
-        ListNode cur = head;  //当前在第1个
 
-        System.out.println("oddHead="+oddHead);
-        System.out.println("evenHead="+evenHead);
+        while (oddCur.next != null && evenCur.next != null) {
+            oddCur.next = evenCur.next;
+            oddCur = oddCur.next;
 
-        return oddHead ;
+            evenCur.next = oddCur.next;
+            evenCur = evenCur.next;
+        }
+        oddCur.next = evenHead ;
+        return head;
 
     }
 
@@ -53,10 +50,16 @@ public class LinkedListOddEvenList {
         ListNode node3 = new ListNode(3);
         ListNode node4 = new ListNode(4);
         ListNode node5 = new ListNode(5);
+        ListNode node6 = new ListNode(6);
+        ListNode node7 = new ListNode(7);
+        ListNode node8 = new ListNode(8);
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
         node4.next = node5;
+        node5.next = node6;
+        node6.next = node7;
+        node7.next = node8;
 
         System.out.println(new LinkedListOddEvenList().oddEvenList(node1));
     }

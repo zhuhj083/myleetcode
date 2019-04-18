@@ -1,4 +1,4 @@
-package com.zhj.leetcode.card.list;
+package com.zhj.leetcode.learn.list;
 
 import com.zhj.leetcode.base.ListNode;
 
@@ -15,9 +15,9 @@ public class LinkedListReverseList {
             return null;
         }
 
+        ListNode newHead = head;
         ListNode cur = head.next;
         head.next = null ;
-        ListNode newHead = head;
         ListNode tmp ;
         while(cur != null){
             tmp = cur;
