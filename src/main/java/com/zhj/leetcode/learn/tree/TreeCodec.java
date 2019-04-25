@@ -1,9 +1,9 @@
 package com.zhj.leetcode.learn.tree;
 
-import com.sun.tools.javac.util.StringUtils;
 import com.zhj.leetcode.base.TreeNode;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 二叉树的序列化与反序列化
@@ -23,121 +23,119 @@ import java.util.*;
  *   2   3
  *      / \
  *     4   5
- *
- * 序列化为 "[1,2,3,null,null,4,5]"
+ *      \
+ *      6
+ * 序列化为 "[1,2,3,null,null,4,5,null,6]"
  * 说明: 不要使用类的成员 / 全局 / 静态变量来存储状态，你的序列化和反序列化算法应该是无状态的。
  *
  */
 public class TreeCodec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        if (root == null){
-            return "";
-        }
-
-        //先按层遍历
         StringBuilder sb = new StringBuilder();
+        if (root != null){
+            Queue<TreeNode> queue = new LinkedList<>();
+            queue.offer(root);
+            TreeNode last = root;
+            TreeNode nlast = root;
 
-        int maxIndex = 0 ;
-        Map<TreeNode,Integer> nodeIndexmap = new HashMap<>();
-        Map<Integer,TreeNode> indexNodeMap = new HashMap<>();
-
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.offer(root);
-        TreeNode last = root;
-        TreeNode nLast = root;
-        nodeIndexmap.put(root,0 );
-        indexNodeMap.put(0,root );
-        while (!queue.isEmpty()){
-            TreeNode node = queue.poll();
-
-            int i = nodeIndexmap.get(node);
-
-            if (node.left != null){
-                nLast = node.left;
-                queue.offer(node.left);
-                maxIndex = 2 * i + 1;
-            }
-            nodeIndexmap.put(node.left , 2 * i + 1);
-            indexNodeMap.put(2*i+1,node.left);
-
-            if (node.right != null){
-                nLast = node.right;
-                queue.offer(node.right);
-                maxIndex = 2 * i + 2 ;
-            }
-            nodeIndexmap.put( node.right , 2 * i + 2 );
-            indexNodeMap.put(2*i+2,node.right);
-
-            //到达这一行的最后一个节点
-            if (node == last){
-                last = nLast ;
-            }
-        }
-
-        for (int i = 0 ; i <= maxIndex ; i ++){
-            if (indexNodeMap.containsKey(i)){
-                TreeNode node = indexNodeMap.get(i);
-                if (node != null){
-                    sb.append(node.val);
-                }else{
+            while(!queue.isEmpty()){
+                TreeNode cur = queue.poll();
+                if (cur == null && cur != last){
                     sb.append("#");
+                }else{
+                    sb.append(cur.val);
+
+                    if (cur.left != null){
+                        queue.offer(cur.left);
+                        nlast = cur.left;
+                    }else{
+                        queue.offer(null);
+                    }
+
+                    if (cur.right != null){
+                        queue.offer(cur.right);
+                        nlast = cur.right;
+                    }else{
+                        queue.offer(null);
+                    }
+
+                    if (cur == last){
+                        last = nlast;
+                    }
                 }
-                if (i != maxIndex){
+
+                if (!queue.isEmpty()){
                     sb.append(",");
                 }
             }
         }
-
         return  sb.toString();
     }
 
     // Decodes your encoded data to tree.
+    //1,2,3,#,#,4,5,#,6
     public TreeNode deserialize(String data) {
-        TreeNode root = null ;
-        if (data != null && ! "".equals(data) ){
-            String[] strs = data.split(",");
-
-            Map<Integer,TreeNode> indexNodeMap = new HashMap<>();
-            Map<TreeNode,Integer> nodeIndexMap = new HashMap<>();
-
+        TreeNode root = null;
+        if (data != null && data.length() > 0){
+            String [] strs = data.split(",");
             if (strs.length > 0 ){
-                String s = strs[0];
-                if (!"#".equals(s) && !"".equals(s)){
-                    root = new TreeNode(Integer.parseInt(s));
-                    indexNodeMap.put(0,root);
-                    nodeIndexMap.put(root,0);
-                }
-                if (strs.length > 1){
-                    for (int i = 1 ; i < strs.length ; i++) {
-                        // i节点 的两个子节点分别为  2i + 1 和 2i + 2
-                        // i节点的父节点为  (i-1) / 2 ;
-                        String str = strs[i];
-                        if (!"#".equals(str) && !"".equals(str)){
-                            TreeNode node = new TreeNode(Integer.parseInt(str));
-                            indexNodeMap.put(i,node);
-                            nodeIndexMap.put(node,i);
+                String str = strs[0] ;
+                if (!"#".equals(str)){
+                    root = new TreeNode(Integer.parseInt(str));
+                    Queue<TreeNode> queue = new LinkedList<>();
+                    queue.offer(root);
+                    int index = 1 ;
+                    int childCount = 0 ;
+                    while (index < strs.length && !queue.isEmpty() ){
+                        TreeNode parent = queue.element();
 
-                            int parentIndex = (i - 1) / 2;
-
-
-                            TreeNode parent = indexNodeMap.get(parentIndex);
-                            if (parent != null ){
-                                boolean isLeft = (i - 1) % 2 == 0 ;
-                                if (isLeft){
-                                    parent.left = node ;
-                                }else{
-                                    parent.right = node ;
-                                }
-                            }else{
-                                return null;
-                            }
+                        String tmp = strs[index] ;
+                        TreeNode childNode  = null ;
+                        if (!"#".equals(tmp)){
+                            childNode = new TreeNode(Integer.parseInt(tmp));
+                            queue.offer(childNode);
                         }
+
+                        if (childCount == 0 ){
+                            parent.left = childNode;
+                            childCount++;
+                        }else if (childCount == 1){
+                            parent.right = childNode ;
+                            childCount++;
+                        }
+
+                        if (childCount == 2 ){
+                            queue.remove();
+                            childCount = 0 ;
+                        }
+                        index++;
                     }
                 }
             }
         }
-        return root ;
+        return  root;
+    }
+
+    public static void main(String[] args) {
+        TreeNode node1 = new TreeNode(1);
+//        TreeNode node2 = new TreeNode(2);
+//        TreeNode node3 = new TreeNode(3);
+//        TreeNode node4 = new TreeNode(4);
+//        TreeNode node5 = new TreeNode(5);
+//        TreeNode node6 = new TreeNode(6);
+//        node1.right = node2;
+//        node1.right = node3;
+//        node3.left = node4;
+//        node3.right = node5;
+//        node4.right = node6;
+
+        String data = new TreeCodec().serialize(node1);
+        System.out.println(data);
+
+
+        TreeNode root = new TreeCodec().deserialize(data);
+        System.out.println(root);
     }
 
 }
