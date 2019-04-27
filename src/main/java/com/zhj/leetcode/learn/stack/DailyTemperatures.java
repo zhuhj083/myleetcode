@@ -18,6 +18,14 @@ public class DailyTemperatures {
     /**
      * 使用 递减栈 来做
      *
+     * 例如，当遍历到第2个元素 75 的时候，Stack中的元素是这样的
+     * |       |
+     * |       |
+     * | 3(71) |
+     * | 5(72) |
+     * | 6(76) |  <-- 这就是要找的元素 6
+     * |_______|
+     *
      */
     public int[] dailyTemperatures(int[] T) {
         int[] dailys = new int[T.length];
