@@ -40,29 +40,32 @@ public class ArrayRemoveDuplicates {
         if (nums.length == 0 ){
             return 0;
         }
-        return removeDuplicates(nums,0,nums.length - 1 ) + 1;
-    }
 
-    public int removeDuplicates(int[] nums , int left ,int right){
-        if (left <= right){
-            int i = left ;
-            int n = nums[i];
-            i++;
-            while (i <= right){
-                int m = nums[i];
-                if (n == m ){
-                    int tmp = nums[i];
-                    nums[i] = nums[right];
-                    nums[right] = tmp;
-                    right--;
-                }
+        int cur = nums[0];
+        int i = 1 ;
+        int changeIndex = 1 ;
+        int nextIndex ;
+        while (i < nums.length){
+            while ( i < nums.length &&  nums[i] <= cur){
                 i++;
             }
 
-            right = removeDuplicates(nums, left + 1 ,right);
+            if (i < nums.length){
+                cur = nums[i];
+                nextIndex = i ;
+
+                int temp = nums[nextIndex];
+                nums[nextIndex] = nums[changeIndex];
+                nums[changeIndex] = temp;
+
+                changeIndex ++ ;
+            }
         }
-        return right;
+
+        return changeIndex ;
+
     }
+
 
     public static void main(String[] args) {
         int[] nums = {0,0,1,1,1,2,2,3,3,4};
